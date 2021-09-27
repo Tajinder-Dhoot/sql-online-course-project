@@ -19,8 +19,10 @@ select name from citizens where age = 24 and exp = 3;
 select * from citizens where age <= 24 or exp =5;
 
 # print age between 24 and 26 (includes 24 and 26)
-select * from citizens where age in (24,26);
 select * from citizens where age between 24 and 26;
+
+# print names where age = 24 and 26
+select * from citizens where age in (24,26);
 
 select * from citizens where age not between 24 and 26;
 
@@ -46,8 +48,6 @@ select * from citizensloc;
 select * from citizens where name = (select name from citizensloc where location = 'jalandhar');
 select * from citizens where name in (select name from citizensloc where location = 'hoshiarpur');
 
-select name from citizeninsert_new_orderssloc where location = 'jalandhar';
-
 # Joins 
 select c.name, cl.location from citizens as c join citizensloc as cl on c.name = cl.name; 
 select c.*, cl.location from citizens as c join citizensloc as cl on c.name = cl.name having location ='hoshiarpur';
@@ -55,8 +55,13 @@ select c.name, cl.location from citizens as c inner join citizensloc as cl on c.
 select c.name, cl.location from citizens as c left join citizensloc as cl on c.name = cl.name;
 select c.name, cl.location from citizens as c right join citizensloc as cl on c.name = cl.name;
 
+select c.*, cl.location from citizens as c join citizensloc as cl on c.name = cl.name;
+
 update citizensloc set location = 'hoshiarpur' where name = 'Surajpal';
 insert into citizensloc values('Kulbir Singh', 'Ropar');
 
 #String functions
 select concat(name, exp) as exp from citizens;
+select name, age from citizens union all select name, location from citizensloc;
+select name, age from citizens union select name, location from citizensloc;
+select * from citizens where exists (select * from citizensloc where location = 'dhoot kalan');
